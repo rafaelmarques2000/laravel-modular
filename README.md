@@ -7,6 +7,7 @@ Este projeto consiste no laravel 7.1 Modificado para ter suporte aos seguintes r
 - Injeção automática de Models e Repositorys(Em andamento)
 - Modificar para que cada novos comandos de terminar possam ser criados por modulo(No momemnto somente no componente Main)
 - Adaptar os Migrations para cada Modulo
+- Reconfigurar os compiladores de frontend
 
 ## Comandos
 
