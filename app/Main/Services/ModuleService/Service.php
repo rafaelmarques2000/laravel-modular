@@ -11,8 +11,14 @@ class Service{
      */
     public function create($moduleName){
         try{ 
+
+            if($this->CheckModuleExits($moduleName)){
+                throw new \Exception("Modulo já existe.");
+            }
+
             if($this->createFolders($moduleName)){
                 if($this->createFiles($moduleName)){
+                    echo "Modulo criado com sucesso.";
                     return true;
                 }else{
                     throw new \Exception("Falha ao criar arquivos");
@@ -21,6 +27,7 @@ class Service{
                 throw new \Exception("Falha ao criar pastas");
             }
         }catch(\Exception $e){
+            echo $e->getMessage();
             return false;
         }
     }
@@ -64,7 +71,7 @@ class Service{
     private function createFiles($moduleName){
         try{
             $this->createRouteFile($moduleName);
-            $this->createProvider($moduleName);
+            $this->createProviderFile($moduleName);
             return true;
         }catch(\Exception $e){
             echo $e->getMessage();
@@ -83,7 +90,7 @@ class Service{
         fclose($route);
     } 
 
-    private function createProvider($moduleName){
+    private function createProviderFile($moduleName){
         $provider = fopen("app/Modules/".$moduleName."/Providers/ModuleServiceProvider.php","w+");
 
         $template = file_get_contents("app/Main/Services/ModuleService/FilesTemplates/Provider.txt");
@@ -93,12 +100,15 @@ class Service{
            "{view_module}" =>strtolower($moduleName),
            "{controller_module}"=>$moduleName,
            "{prefixo}" =>strtolower($moduleName),
-           "{prefixo}" =>strtolower($moduleName),
            "{route_module}"=>$moduleName
         ]);
 
         fwrite($provider,$process);
         fclose($provider);
+    }
+
+    private function CheckModuleExits($moduleName){
+        return file_exists("app/Modules/".$moduleName);
     }
 
 }

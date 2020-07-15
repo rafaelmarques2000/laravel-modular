@@ -1,5 +1,3 @@
 <?php 
 
-Route::get("/",function(){
-    echo "Rota Padrão modulo admin";
-});
+Route::get("/","TesteController@index");

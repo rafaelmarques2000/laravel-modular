@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Modules\{package}\Controllers;
+
+use App\Main\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+class {class_name} extends Controller
+{
+      public function index(){
+          echo "Metodo padrão controller";
+      }
+}

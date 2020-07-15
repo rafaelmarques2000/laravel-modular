@@ -3,23 +3,23 @@
 namespace App\Main\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Main\Services\ModuleService\Service;
+use App\Main\Services\ControllerService\Service as ControllerService;
 
-class CreateModule extends Command
+class CreateController extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'module:create {module}';
+    protected $signature = 'module:createcontroller {namespace}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Comando para criação de modulos no sistema';
+    protected $description = 'Comando para criação de controllers';
 
     /**
      * Create a new command instance.
@@ -36,8 +36,8 @@ class CreateModule extends Command
      *
      * @return int
      */
-    public function handle(Service $moduleService)
+    public function handle(ControllerService $controllerService)
     {
-        $moduleService->create($this->argument('module'));
+        $controllerService->create($this->argument("namespace"));
     }
 }

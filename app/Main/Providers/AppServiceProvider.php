@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
        try{ 
         $modules = dir("../app/Modules");
         while (false !== ($module = $modules->read())) {
-            if($module == "." || $module == ".."){ 
+            if($module == "." || $module == ".." || $module==".gitignore"){ 
                continue;  
             }else{
                 $this->app->register("App\\Modules\\".$module."\\Providers\ModuleServiceProvider");
@@ -49,6 +49,10 @@ class AppServiceProvider extends ServiceProvider
          */
         $this->app->bind("App\\Main\\Services\\ModuleService\Service",function(){
             return new \App\Main\Services\ModuleService\Service();
+        });
+
+        $this->app->bind("App\\Main\\Services\\ControllerService\Service",function(){
+            return new \App\Main\Services\ControllerService\Service();
         });
     }
 }
