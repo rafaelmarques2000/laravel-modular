@@ -9,15 +9,15 @@ class Service{
      * @param $moduleName
      * @return bool
      */
-    public function create($moduleName){
+    public function create($moduleName,$package = false){
         try{ 
 
             if($this->CheckModuleExits($moduleName)){
                 throw new \Exception("Modulo já existe.");
             }
 
-            if($this->createFolders($moduleName)){
-                if($this->createFiles($moduleName)){
+            if($this->createFolders($moduleName,$package)){
+                if($this->createFiles($moduleName,$package)){
                     echo "Modulo criado com sucesso.";
                     return true;
                 }else{
@@ -32,21 +32,37 @@ class Service{
         }
     }
 
+    public function ChoiceFolderTypeModuleOrPackage($package){
+        $folders = [
+            "Controllers",
+            "Domain"=>["Model","Repository"],
+            "Providers",
+            "Routes",
+            "Services",
+            "Views"];
+        
+        if($package){
+            $folders = [
+                    "Domain"=>["Model","Repository"],
+                    "Providers",
+                    "Services",
+                ];
+        }
+
+        return $folders;
+    }
+
+
     /**
      * Create folders Module
      * @param string $moduleName
      * @return bool
      */
-    private function createFolders($moduleName){
+    private function createFolders($moduleName,$package){
         try{
-           $folders = [
-               "Controllers",
-               "Domain"=>["Model","Repository"],
-               "Providers",
-               "Routes",
-               "Services",
-               "Views"];
            
+            $folders = $this->ChoiceFolderTypeModuleOrPackage($package);
+ 
            if(mkdir("app/Modules/".$moduleName)){
                  foreach($folders as $key=>$folder){
                      if(is_int($key)){
@@ -68,10 +84,12 @@ class Service{
         }
     }
 
-    private function createFiles($moduleName){
+    private function createFiles($moduleName,$package){
         try{
-            $this->createRouteFile($moduleName);
-            $this->createProviderFile($moduleName);
+            if(!$package){ 
+              $this->createRouteFile($moduleName);
+            }
+            $this->createProviderFile($moduleName,$package);
             return true;
         }catch(\Exception $e){
             echo $e->getMessage();
@@ -90,10 +108,12 @@ class Service{
         fclose($route);
     } 
 
-    private function createProviderFile($moduleName){
+    private function createProviderFile($moduleName,$package){
         $provider = fopen("app/Modules/".$moduleName."/Providers/ModuleServiceProvider.php","w+");
-
-        $template = file_get_contents("app/Main/Services/ModuleService/FilesTemplates/Provider.txt");
+        
+        $typeBuildModule = $package ?"PackageService":"ModuleService";
+        
+        $template = file_get_contents("app/Main/Services/$typeBuildModule/FilesTemplates/Provider.txt");
 
         $process = strtr($template,[
            "{namespace_module}" => $moduleName,

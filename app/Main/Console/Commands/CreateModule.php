@@ -12,7 +12,7 @@ class CreateModule extends Command
      *
      * @var string
      */
-    protected $signature = 'module:create {module}';
+    protected $signature = 'create:module {module}';
 
     /**
      * The console command description.
@@ -38,6 +38,6 @@ class CreateModule extends Command
      */
     public function handle(Service $moduleService)
     {
-        $moduleService->create($this->argument('module'));
+        $moduleService->create($this->argument('module'),false);
     }
 }

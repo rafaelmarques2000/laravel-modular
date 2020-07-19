@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Modules\{module}\Domain\Repository;
+
+use App\Main\Contracts\RepositoryContract;
+
+
+class {class} implements RepositoryContract{
+
+        public function findAll(){
+
+        }
+
+        public function find($dados){
+
+        }
+
+        public function save($dados){
+
+        }
+
+        public function update($dados){
+
+        }
+
+        public function delete($dados){
+
+
+        }
+
+}

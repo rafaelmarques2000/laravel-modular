@@ -1,0 +1,38 @@
+<?php 
+
+namespace App\Modules\{namespace_module}\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+
+class ModuleServiceProvider extends ServiceProvider{
+
+    public function boot(){
+       
+    }
+
+    public function register(){
+         $this->registerModels();
+    }
+
+    private function registerModels(){
+        try{ 
+            $models = dir("../app/Modules/{namespace_module}/Domain/Model");
+            while (false !== ($model = $models->read())) {
+                if($model == "." || $model == ".." || $model==".gitignore"){ 
+                   continue;  
+                }else{
+                    $model = explode(".",$model);
+                    $this->app->bind("App\\Modules\\{namespace_module}\\Domain\Model\\".$model[0],function() use($model){
+                     $instanceModel = new \ReflectionClass("\App\Modules\{namespace_module}\Domain\Model\\".$model[0]);
+                     return $instanceModel->newInstance();
+                   });            
+                }
+            }
+            $models->close(); 
+          }catch(\Exception $e){
+              
+          }
+    }
+
+}

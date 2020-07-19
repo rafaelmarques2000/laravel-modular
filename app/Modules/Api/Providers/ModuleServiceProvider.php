@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Modules\Api\Providers;
 
@@ -13,7 +13,7 @@ class ModuleServiceProvider extends ServiceProvider{
     }
 
     public function register(){
-         $this->registerModels();
+
     }
 
     private function loadRoutes(){
@@ -27,24 +27,6 @@ class ModuleServiceProvider extends ServiceProvider{
         });
     }
 
-    private function registerModels(){
-        try{ 
-            $models = dir("../app/Modules/Api/Domain/Model");
-            while (false !== ($model = $models->read())) {
-                if($model == "." || $model == ".." || $model==".gitignore"){ 
-                   continue;  
-                }else{
-                    $model = explode(".",$model);
-                    $this->app->bind("App\\Modules\\Api\\Domain\Model\\".$model[0],function() use($model){
-                     $instanceModel = new \ReflectionClass("\App\Modules\Api\Domain\Model\\".$model[0]);
-                     return $instanceModel->newInstance();
-                   });            
-                }
-            }
-            $models->close(); 
-          }catch(\Exception $e){
-              
-          }
-    }
+
 
 }

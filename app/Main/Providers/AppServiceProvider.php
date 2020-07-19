@@ -54,5 +54,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind("App\\Main\\Services\\ControllerService\Service",function(){
             return new \App\Main\Services\ControllerService\Service();
         });
+
+        $this->app->bind("App\\Main\\Services\\PackageService\Service",function(){
+            return new \App\Main\Services\PackageService\Service();
+        });
+
+        $this->app->bind("App\\Main\\Services\\RepositoryService\Service",function(){
+            return new \App\Main\Services\RepositoryService\Service();
+        });
     }
 }

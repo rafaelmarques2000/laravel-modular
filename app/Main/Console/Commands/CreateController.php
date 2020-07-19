@@ -12,7 +12,7 @@ class CreateController extends Command
      *
      * @var string
      */
-    protected $signature = 'module:createcontroller {namespace}';
+    protected $signature = 'create:controller {namespace}';
 
     /**
      * The console command description.
