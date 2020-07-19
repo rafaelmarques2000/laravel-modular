@@ -4,24 +4,14 @@ Este projeto consiste no laravel 7.1 Modificado para ter suporte aos seguintes r
 
 - Modularidade(ok)
 - Registro automático dos modulos atraves do provider do modulo Main(ok)
-- Injeção automática de Models , Repositorys e services(Em andamento)
-- Modificar para que cada novos comandos de terminal possam ser criados por modulo(No momemnto somente no componente Main, mais funciona normalmente no terminal)
-- Adaptar os Migrations para cada Modulo(em andamento)
+- Injeção automática de Models , Repositorys e services(Em andamento)(ok)
 
 
-## Comandos
-
-Para criar um modulo e sua estrutura 
-
-**php artisan module:create {Nome do modulo}**
-Ex: php artisan module:create Api
-
-#### Instruções para o Artisan
-
-Parar criar um controller dentro do modulo
-- **php artisan make:controller {namespace}**
-Ex: **php artisan make:controller "App\Modules\Api\Domain\Model\Produto"**
-
+## Comandos Personalizados
+- create:module
+- create:controller
+- create:repository
+- create:package
 
 ## Estrutura do Modulo Main
 - Console
@@ -42,4 +32,10 @@ configurações Gerais.
 - Routes
 - Services
 - Views
+
+## Estrutura de Pacote
+  - Domain
+    - Model
+    - Repository
+  - Providers
 
